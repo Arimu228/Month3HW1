@@ -33,17 +33,23 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("IntentReset")
     private fun sendEmailIntent(email: String, theme: String, text: String) {
-        val mIntent = Intent(Intent.ACTION_SEND)
-        mIntent.data = Uri.parse("mailto:")
-        mIntent.putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
-        mIntent.putExtra(Intent.EXTRA_SUBJECT, theme)
-        mIntent.putExtra(Intent.EXTRA_TEXT, text)
-        mIntent.type = "text/plain"
-        try {
-            startActivity(Intent.createChooser(mIntent, "Choose Email client."))
-        } catch (e: Exception) {
-            Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
+        if (theme.equals("") || email.equals("") || text.equals("")) {
+            Toast.makeText(this, "fill all fields", Toast.LENGTH_SHORT).show()
+        } else {
+            val mIntent = Intent(Intent.ACTION_SEND)
+            mIntent.data = Uri.parse("mailto:")
+            mIntent.putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
+            mIntent.putExtra(Intent.EXTRA_SUBJECT, theme)
+            mIntent.putExtra(Intent.EXTRA_TEXT, text)
+            mIntent.type = "text/plain"
+            try {
+                startActivity(Intent.createChooser(mIntent, "Choose Email client."))
+            } catch (e: Exception) {
+                Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
+            }
         }
+
+
     }
 
 }
